@@ -1,0 +1,57 @@
+<! DOCTYPE html>
+
+<html>
+	<head>
+		<title> Week 3 </title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+     $( document ).ready(function() {
+      //  $( "#submit" ).click(function() {
+      //    window.location.href='/newpage.html';
+      //  });
+			$('form').submit(function(event){
+					var formData = {
+						'email'			: $('input[id=email]').val(),
+						'password'	: $('input[id=password]').val()
+					};
+
+					$.ajax({
+        		type : "POST",
+						contentType : "application/json",
+						url : window.location + "api/login",
+						data : JSON.stringify(formData),
+						dataType : 'json',
+						success : function(customer) {
+							$("#loginform").addClass("hide");
+							$("#postResultDiv").html("<p>" +
+							"Post Successfully! <br>" +
+							"Email Address: " + customer.email+ "</br>" +
+							"Password: " + customer.password+ "</br>" +
+							"Valid User: " + customer.valid +"</p>");
+      	},
+        error : function(e) {
+          alert("Error!")
+          console.log("ERROR: ", e);
+        }
+      });
+						event.preventDefault();
+				});
+    });
+
+    </script>
+
+	</head>
+	<body>
+		<div id="loginpage">
+        <form id="loginform" >
+          <p><label for="email">Email Address</label>
+          <input type="email" name="email" id="email" /></p>
+          <p><label for="password">Password</label>
+          <input type="Password" name="password" id="password" /></p>
+          <button type="submit" id="submit">Login</button>
+        </form>
+      </div>
+	</body>
+</html>
+
+<div id = "postResultDiv"></div>
