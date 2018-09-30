@@ -1,0 +1,23 @@
+<div>
+  <br>
+  <mat-card>
+    <section class="mat-typography">
+      <h3>Login</h3>
+    </section>
+    <mat-divider></mat-divider>
+    <br>
+    <form [formGroup]="loginuser" class="login">
+      <mat-form-field class="field-full-width">
+        <input matInput placeholder="Username" formControlName="username" #username>
+      </mat-form-field>
+      <br>
+      <mat-form-field class="field-full-width">
+        <input matInput placeholder="Password" formControlName="password" #password>
+      </mat-form-field>
+      <mat-divider></mat-divider>
+      <br><br>
+      <button mat-raised-button color="green" routerLink="/register">Register</button>&nbsp;
+      <button type="submit" (click)="loginUser(username.value, password.value)" [disabled]="loginuser.pristine || loginuser.invalid" mat-raised-button color="primary">Login</button>
+    </form>
+</mat-card>
+</div>

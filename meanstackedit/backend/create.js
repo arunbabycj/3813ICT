@@ -1,7 +1,7 @@
-module.exports = function(app, db){
+module.exports = function(app){
 
-  db.createCollection("products", function(err, res) {
-    if (err) throw err;
-    console.log("Collection created!");
-  });
+  // db.createCollection("products", function(err, res) {
+  //   if (err) throw err;
+  //   console.log("Collection created!");
+  // });
 }

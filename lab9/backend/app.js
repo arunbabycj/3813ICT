@@ -9,6 +9,14 @@ mongoose.connect('mongodb://localhost:27017');
 
 const connection = mongoose.connection;
 
+const corsOptions = {
+  origin: 'http://localhost:4200', // Angular server address and port
+  optionsSuccessStatus: 200 //
+};
+
+// Set up CORS (Cross Site)
+app.use(cors(corsOptions));
+
 connection.once('open', () => {
    console.log('MongoDB database connection established successfully!');
    require('./add.js')(app);

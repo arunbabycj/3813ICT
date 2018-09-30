@@ -16,7 +16,7 @@
 //import Issue from './models/Issue';
 const Issue = require('./models/Issue');
 
-module.exports = function(app){
+module.exports = function(app, router){
   app.post('/products/add', (req, res) => {
     let issue = new Issue(req.body);
     issue.save()
