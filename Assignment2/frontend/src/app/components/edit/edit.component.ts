@@ -18,15 +18,21 @@ import { Group} from '../../group.model';
 export class EditComponent implements OnInit {
 
   id: String;
-  issue: any = {};
+  //issue: any = {};
   updateForm: FormGroup;
 
   //createForm: FormGroup;
-  groups: Issue[];
+  joinedgroups: Issue[];
+  restgroups:String;
   displayedColumns = ['name'];
   sessionuser = "";
+  join ="" ;
+  rest:String =" ";
+  res = "";
+  diffdata = [];
   constructor(private issueService: IssueService, private router: Router, private route: ActivatedRoute, private snackBar: MatSnackBar, private fb: FormBuilder) {
     this.createForm();
+
   }
 
   ngOnInit() {
@@ -36,15 +42,54 @@ export class EditComponent implements OnInit {
       this.updateForm.get('name').setValue(this.sessionuser);
     });
     this.fetchGroups();
+    this.fetchRestGroups();
   }
 
   fetchGroups() {
     this.issueService
     .getGroups(this.sessionuser)
-    .subscribe((data: Issue[]) => {
-      this.groups = data.groupname;
+    .subscribe((data: any) => {
+      this.joinedgroups = data.groupname;
+      this.join = data.groupname;
       console.log('group requested ... ');
-      console.log(this.groups);
+      console.log(this.joinedgroups);
+      console.log("are",this.join);
+      this.router.navigate(['/edit']);
+    });
+  }
+
+  fetchRestGroups() {
+    this.issueService
+    .getRestGroups(this.sessionuser)
+    .subscribe((data: any) => {
+      console.log(data);
+      var num = 0;
+      if(data.length==0){
+      }else {
+        for(var i=0;i<data.length;i++){
+          num = i;
+        }
+        this.rest = data[num].allgroup;
+        // console.log("hi",this.rest);
+        // this.res = this.rest.filter( function(n) { return !this.has(n) }, new Set(this.join) );
+        // console.log(this.res);
+          var missings = [];
+          var matches = false;
+
+          for ( var i = 0; i < this.rest.length; i++ ) {
+            matches = false;
+            for ( var e = 0; e < this.join.length; e++ ) {
+              if ( this.rest[i] === this.join[e] ) matches = true;
+            }
+            if(!matches) missings.push( this.rest[i] );
+          }
+
+      }
+      //this.restgroups = this.res;
+    //  this.restgroups = missings;
+      console.log('rest group requested ... ');
+      console.log(this.restgroups);
+      this.router.navigate(['/edit']);
     });
   }
 
